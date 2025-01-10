@@ -6,10 +6,10 @@ export default function UpdateProduct({
         params: { productId: String };
 }) {
     return (
-        <h1>
+        <div>
             <SideBar/>
-           Detail about product {params.productId}
+           <h1>Detail about product {params.productId}</h1>
            <Footer/>
-        </h1>
+        </div>
     )
 }

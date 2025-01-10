@@ -3,10 +3,10 @@ import SideBar from "@/components/admin/Sidebar/Sidebar"
 import Footer from "@/components/admin/Footer/Footer"
 export default function AddProducts() {
     return (
-        <h1>
+        <div>
             <SideBar />
-            Welcome to Admin Products!
+            <h1>Welcome to Admin Products!</h1>
             <Footer />
-        </h1>
+        </div>
     )
 }

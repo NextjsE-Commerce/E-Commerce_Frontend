@@ -6,10 +6,10 @@ export default function ProductDetail({
     params: { productId: String };
 }) {
     return (
-        <h1>
+        <div>
             <Header />
-              Detail about product {params.productId}
+              <h1>Detail about product {params.productId}</h1>
             <Footer />
-        </h1>
+        </div>
     )
 }
