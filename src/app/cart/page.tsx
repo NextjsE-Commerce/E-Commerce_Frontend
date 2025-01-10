@@ -1,7 +1,11 @@
+import Header from "@/components/user/header/Header"
+import Footer from "@/components/user/footer/Footer";
 export default function Cart() {
     return (
         <h1>
-            Welcome to Cart Page!
+            <Header />
+              Welcome to Cart Page!
+            <Footer />
         </h1>
     )
 }
