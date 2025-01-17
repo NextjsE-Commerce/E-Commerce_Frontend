@@ -3,9 +3,9 @@ import Footer from "@/components/user/footer/Footer";
 export default function Order() {
     return (
         <div>
-            <Header />
+            <Header page="Order" />
               <h1>Welcome to Orders Page!</h1>
-            <Header />
+            <Footer />
         </div>
     )
 }
