@@ -124,7 +124,7 @@ export default function AdminHeader({ page }: HeaderProps) {
                         <div className="relative">
                             <Link
                                 href="/admin/dashboard"
-                                className="text-gray-700 hover:text-white hover:font-bold transition ease-in-out delay-100  hover:-translate-y-1 hover:scale-105"
+                                className="text-gray-700 hover:text-blue-400 hover:font-bold transition ease-in-out delay-100  hover:-translate-y-1 hover:scale-105"
                                 style={{ display: 'inline-block', transformOrigin: 'center' }}>
                                 Home
                             </Link>
@@ -133,7 +133,7 @@ export default function AdminHeader({ page }: HeaderProps) {
                         <div className="relative">
                             <Link
                                 href="/admin/addproduct"
-                                className="text-gray-700 hover:text-white hover:font-bold transform transition-transform duration-300"
+                                className="text-gray-700 hover:text-blue-400 hover:font-bold transform transition-transform duration-300"
                                 style={{ display: 'inline-block', transformOrigin: 'center' }}>
                                 Add Product
                             </Link>
