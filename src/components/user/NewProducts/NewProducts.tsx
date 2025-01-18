@@ -124,9 +124,8 @@ const NewProducts = () => {
                             <button
                                 key={index}
                                 onClick={() => handlePageChange(index + 1)}
-                                className={`px-4 py-2 rounded-md ${currentPage === index + 1 ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"
-                                    } hover:bg-blue-500 hover:text-white transition`}
-                            >
+                                className={`px-4 py-2 rounded-full ${currentPage === index + 1 ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"
+                                    } hover:bg-blue-500 hover:text-white transition`}>
                                 {index + 1}
                             </button>
                         ))}

@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "@/redux/store";
-import { updateFormDataRegister, updateImage, clearErrors, setErrorsRegister } from "@/redux/userSlice";
+import { updateFormDataRegister, updateImage, clearErrors, setErrorsRegister, cleanFormData } from "@/redux/userSlice";
 import axios from 'axios';
 import { useRouter } from "next/navigation";
 import { defaultHead } from "next/head";
@@ -23,6 +23,7 @@ export default function Register() {
 
     useEffect(() => {
         dispatch(clearErrors());
+        dispatch(cleanFormData());
     }, [dispatch]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {

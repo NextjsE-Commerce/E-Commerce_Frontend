@@ -141,6 +141,16 @@ const userSlice = createSlice({
             state.errorsLogin = {};
         },
 
+        cleanFormData: (state) => {
+            state.formDataRegister.firstName = "",
+            state.formDataRegister.lastName = "",
+            state.formDataRegister.sex = "";
+            state.formDataRegister.email = ""
+            state.formDataRegister.password = "",
+            state.formDataRegister.phone = ""
+            state.formDataRegister.password_confirmation = ""
+        },
+
         setErrorsRegister: (state, action: { payload: Record<string, string> }) => {
             state.errorsRegister = action.payload;
         },
@@ -151,5 +161,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { getUser, getProduct, updateFormDataRegister, updateFormDataLogin, updateGoogleFormData, updateImage, clearErrors, setErrorsRegister, setErrorsLogin, deleteUser } = userSlice.actions;
+export const { getUser, getProduct, updateFormDataRegister, updateFormDataLogin, updateGoogleFormData, updateImage, clearErrors, cleanFormData, setErrorsRegister, setErrorsLogin, deleteUser } = userSlice.actions;
 export default userSlice.reducer;
