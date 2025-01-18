@@ -1,3 +1,18 @@
+# first clone the application then 
+
+# Run npm run dev
+
+
+## git colone https://github.com/NextjsE-Commerce/E-Commerce_Frontend
+
+## npm run dev
+
+## for any issue contat me on 0970951608
+
+
+
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
