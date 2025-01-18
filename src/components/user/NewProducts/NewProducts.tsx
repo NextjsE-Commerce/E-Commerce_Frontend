@@ -88,6 +88,10 @@ const NewProducts = () => {
             return;
         }
 
+        console.log(productId)
+
+        console.log(quantity)
+
         try {
             const token = Cookies.get("access_token");
             const response = await axios.post(
@@ -105,7 +109,7 @@ const NewProducts = () => {
             if (response.status === 200) {
                 toast.success("Added to cart successfully!", {
                     position: "top-right",
-                    autoClose: 4000,
+                    autoClose: 2000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -178,7 +182,7 @@ const NewProducts = () => {
                                 <div className="flex justify-center">
                                     <input
                                         type="number"
-                                        min="1"
+                                        min="0"
                                         value={quantities[product.id] || 1}
                                         // defaultValue="1"
                                         className="border w-20 px-3 py-2 text-center"
@@ -188,7 +192,7 @@ const NewProducts = () => {
                                                 [product.id]: parseInt(e.target.value, 10) || 1,
                                             })
                                         }
-                                        id={`quantity_${product.id}`}
+                                        // id={`quantity_${product.id}`}
                                     />
                                     <button
                                         className="bg-blue-500 text-white p-2 px-3 py-2 rounded-r-sm  flex items-center space-x-1 hover:scale-105 transform transition"

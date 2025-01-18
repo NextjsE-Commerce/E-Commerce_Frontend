@@ -44,7 +44,7 @@ export default function Header({ page }: HeaderProps) {
         Cookies.remove("role");
         setIsLoggedIn(false);
 
-        router.push("/");
+        router.push("/login");
       } else {
         console.error("Logout failed");
       }
