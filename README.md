@@ -3,7 +3,7 @@
 # Run npm run dev
 
 
-# git colone https://github.com/NextjsE-Commerce/E-Commerce_Frontend
+## git colone https://github.com/NextjsE-Commerce/E-Commerce_Frontend
 
 npm run dev
 
