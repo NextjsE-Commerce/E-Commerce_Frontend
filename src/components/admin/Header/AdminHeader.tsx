@@ -55,7 +55,7 @@ export default function AdminHeader({ page }: HeaderProps) {
             });
 
             if (response.status === 200) {
-                console.log(Cookies.get("access_token"))
+                // console.log(Cookies.get("access_token"))
                 Cookies.remove("access_token", { secure: true, sameSite: "strict" });
                 Cookies.remove("role");
                 setIsLoggedIn(false);

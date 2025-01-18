@@ -45,9 +45,11 @@ export default function Dashboard() {
     const fetchProduct = async () => {
         try {
             setLoading(true);
-            const response = await axios.post('http://localhost:8000/api/products', {
+            const token = Cookies.get("access_token")
+            const response = await axios.post('http://localhost:8000/api/products',{}, {
                 headers: {
                     "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`,
                 },
                 // withCredentials: true,
             });
@@ -105,12 +107,12 @@ export default function Dashboard() {
     return (
         <div>
             <AdminHeader page="Dashboard" />
-            <div className="mt-32">
+            <div className="mt-24">
                 {/* Centered Dashboard Text */}
 
 
                 {loading ? (
-                    <div className="mt-52 flex justify-center items-center h-64">
+                    <div className="mt-48 flex justify-center items-center h-64">
                         <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
                     </div>
                 ) : (

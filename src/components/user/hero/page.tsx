@@ -29,9 +29,9 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="mt-20 relative overflow-hidden ">
+    <div className="relative overflow-hidden ">
       <div className="bg-gray-200 flex relative z-20 items-center overflow-hidden">
-        <div className="container md:mx-20  px-6 flex relative py-11">
+        <div className="mt-24 container md:mx-20  px-6 flex relative py-11">
           <div className="sm:w-2/3 lg:w-2/5 flex flex-col relative z-20">
             <span className="w-20 h-2 bg-blue-500  mb-2">
             </span>

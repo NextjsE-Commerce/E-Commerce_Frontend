@@ -80,7 +80,7 @@ export default function Register() {
                     },
                 }
             );
-            console.log(response.data.message);
+            // console.log(response.data.message);
             setRegbutstate(false)
             router.push("/login")
 
@@ -256,7 +256,7 @@ export default function Register() {
                         <button
                             onClick={handleSubmit}
                             id="Submit_Button"
-                            className={`w-full bg-blue-400 text-white font-semibold border  hover:text-blue-300  p-2 ${regbutstate ? 'opacity-50 cursor-not-allowed' : 'hover:text-blue-300'} rounded-lg mb-6`}
+                            className={`w-full bg-blue-400 text-white font-semibold border   p-2 ${regbutstate ? 'opacity-50 cursor-not-allowed' : 'hover:text-white hover:bg-blue-300'} rounded-lg mb-6`}
                             disabled={regbutstate}>
                             {regbutstate ? 'Registering...' : 'Register'}
                         </button>

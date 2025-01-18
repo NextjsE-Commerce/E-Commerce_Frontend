@@ -9,8 +9,31 @@ interface User {
     profileImage: string;
 }
 
+interface Products {
+    id: string;
+    product_name: string;
+    category: string;
+    product_status: string;
+    description: string;
+    price: string;
+    quantity: string;
+    product_image: string;
+}
+
 const initialState: {
     users: { id: string; firstName: string; lastName: string; email: string; phone: string; profileImage: string }[];
+
+    products: {
+        id: string;
+        product_name: string;
+        category: string;
+        product_status: string;
+        description: string;
+        price: string;
+        quantity: string;
+        product_image: string;
+    }[];
+
     formDataRegister: {
         firstName: string;
         lastName: string;
@@ -36,6 +59,7 @@ const initialState: {
 
 } = {
     users: [],
+    products: [],
     formDataRegister: {
         firstName: "",
         lastName: "",
@@ -72,6 +96,19 @@ const userSlice = createSlice({
                 email: user.email,
                 phone: user.phone,
                 profileImage: user.profileImage,
+            }));
+        },
+        
+        getProduct: (state, action: { payload: Products[] }) => {
+            state.products = action.payload.map((products: Products) => ({
+                id: products.id,
+                product_name: products.product_name,
+                category: products.category,
+                product_status: products.product_status,
+                description: products.description,
+                price: products.price,
+                quantity: products.quantity,
+                product_image: products.product_image,
             }));
         },
 
@@ -114,5 +151,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { getUser, updateFormDataRegister, updateFormDataLogin, updateGoogleFormData,updateImage, clearErrors, setErrorsRegister, setErrorsLogin, deleteUser } = userSlice.actions;
+export const { getUser, getProduct, updateFormDataRegister, updateFormDataLogin, updateGoogleFormData, updateImage, clearErrors, setErrorsRegister, setErrorsLogin, deleteUser } = userSlice.actions;
 export default userSlice.reducer;

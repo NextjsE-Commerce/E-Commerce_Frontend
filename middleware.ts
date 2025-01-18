@@ -16,7 +16,7 @@ export function middleware(request: NextRequest) {
 
   if (isAdminRoute) {
     if (!cookie) {
-      console.log(cookie)
+      // console.log(cookie)
 
       return NextResponse.redirect(new URL("/login", request.url));
     }

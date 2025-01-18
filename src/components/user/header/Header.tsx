@@ -28,7 +28,7 @@ export default function Header({ page }: HeaderProps) {
     const token = Cookies.get("access_token")
     // const token2 = JSON.parse(localStorage.getItem("access_token"));
     // console.log(token2)
-    console.log(token)
+    // console.log(token)
 
     try {
 
@@ -41,7 +41,7 @@ export default function Header({ page }: HeaderProps) {
       });
 
       if (response.status === 200) {
-        console.log(Cookies.get("access_token"))
+        // console.log(Cookies.get("access_token"))
         Cookies.remove("access_token", { secure: true, sameSite: "strict" });
         Cookies.remove("role");
         setIsLoggedIn(false);

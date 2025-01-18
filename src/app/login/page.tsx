@@ -58,7 +58,7 @@ export default function Login() {
             const response = await axios.post("http://localhost:8000/api/login", formDataLogin);
             const { token, role } = response.data;
 
-            console.log(role)
+            // console.log(role)
 
             
 
@@ -101,7 +101,7 @@ export default function Login() {
 
     const handleAuthorizedRequest = async (token: string) => {
         const cooketoken = Cookies.get("access_token")
-        console.log("Cookie token:" , cooketoken)
+        // console.log("Cookie token:" , cooketoken)
         try {
             const response = await axios.get("http://localhost:8000/api/getUserData", {
                 headers: {
@@ -164,7 +164,7 @@ export default function Login() {
             console.error("Google Login failed:", error);
         }
         finally {
-            console.log("Hello")
+            // console.log("Hello")
         }
     }
 
@@ -231,7 +231,7 @@ export default function Login() {
 
                         <button
                             onClick={handleSubmit}
-                            className={`w-full bg-blue-400 text-white font-semibold border  hover:text-blue-300  p-2 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:text-blue-300'} rounded-lg mb-6`}
+                            className={`w-full bg-blue-400 text-white font-semibold border   p-2 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:text-white '} rounded-lg mb-6`}
                             disabled={isSubmitting}>
                             {isSubmitting ? 'Signing In...' : 'Login'}
                         </button>

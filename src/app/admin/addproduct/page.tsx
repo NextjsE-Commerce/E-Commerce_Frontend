@@ -97,7 +97,7 @@ const AddProduct = () => {
                     },
                 }
             );
-            console.log(response.data.message);
+            // console.log(response.data.message);
             setAddProstate(false)
             router.push("/admin/dashboard")
 
