@@ -9,6 +9,10 @@ interface User {
     profileImage: string;
 }
 
+interface CartItem {
+    item_incart: number; 
+}
+
 interface Products {
     id: string;
     product_name: string;
@@ -33,6 +37,8 @@ const initialState: {
         quantity: string;
         product_image: string;
     }[];
+
+    cartItem: { item_incart: number },
 
     formDataRegister: {
         firstName: string;
@@ -60,6 +66,9 @@ const initialState: {
 } = {
     users: [],
     products: [],
+    cartItem: {
+        item_incart: 0
+    },   
     formDataRegister: {
         firstName: "",
         lastName: "",
@@ -111,6 +120,17 @@ const userSlice = createSlice({
                 product_image: products.product_image,
             }));
         },
+        
+        // getItemInCart: (state, action: { payload: CartItem[] }) => {
+        //     state.cartItem = action.payload.map((cartItem: CartItem) => ({
+        //          item_incart: cartItem.item_incart
+        //       }))
+        //   },
+
+        getItemInCart: (state, action: { payload: number }) => {
+            state.cartItem.item_incart = action.payload; 
+        },
+            
 
         deleteUser: (state, action: { payload: { id: string } }) => {
             const id = action.payload.id;
@@ -161,5 +181,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { getUser, getProduct, updateFormDataRegister, updateFormDataLogin, updateGoogleFormData, updateImage, clearErrors, cleanFormData, setErrorsRegister, setErrorsLogin, deleteUser } = userSlice.actions;
+export const { getUser, getProduct, getItemInCart, updateFormDataRegister, updateFormDataLogin, updateGoogleFormData, updateImage, clearErrors, cleanFormData, setErrorsRegister, setErrorsLogin, deleteUser } = userSlice.actions;
 export default userSlice.reducer;

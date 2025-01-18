@@ -9,7 +9,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getProduct } from "@/redux/userSlice";
+import { getItemInCart, getProduct } from "@/redux/userSlice";
 import { RootState } from "@/redux/store";
 
 const NewProducts = () => {
@@ -24,6 +24,8 @@ const NewProducts = () => {
     const dispatch = useDispatch();
 
     const products = useSelector((state: RootState) => state.users.products);
+
+    const cartItems = useSelector((state: RootState) => state.users.cartItem)
 
     useEffect(() => {
         const accessToken = Cookies.get("access_token");
@@ -107,6 +109,9 @@ const NewProducts = () => {
             );
 
             if (response.status === 200) {
+
+                dispatch(getItemInCart(response.data.items_in_cart))
+
                 toast.success("Added to cart successfully!", {
                     position: "top-right",
                     autoClose: 2000,
@@ -169,16 +174,7 @@ const NewProducts = () => {
                                 </div>
                                 <h1 className="text-2xl font-semibold my-5">{product.product_name}</h1>
                                 <h2 className="font-semibold mb-5">{product.price} Birr</h2>
-                                {/* <div className="space-x-10 flex justify-center">
-                                    <button
-                                        className={`bg-blue-500 text-white justify-center p-2 px-6 rounded-md font-semibold hover:scale-105 transform transition-all duration-300 ease-in-out`}
-                                        style={{ display: "inline-block", transformOrigin: "center" }}>
-                                        <div className="flex space-x-1 items-center">
-                                            <span>Add To</span>
-                                            <FaCartShopping className="text-white text-lg" />
-                                        </div>
-                                    </button>
-                                </div> */}
+
                                 <div className="flex justify-center">
                                     <input
                                         type="number"
@@ -192,18 +188,9 @@ const NewProducts = () => {
                                                 [product.id]: parseInt(e.target.value, 10) || 1,
                                             })
                                         }
-                                        // id={`quantity_${product.id}`}
                                     />
                                     <button
                                         className="bg-blue-500 text-white p-2 px-3 py-2 rounded-r-sm  flex items-center space-x-1 hover:scale-105 transform transition"
-                                        // onClick={() =>
-                                        //     handleAddToCart(
-                                        //         parseInt(product.id),
-                                        //         parseInt(
-                                        //             (document.getElementById(`quantity_${product.id}`) as HTMLInputElement).value
-                                        //         )
-                                        //     )
-                                        // }
                                         onClick={() => handleAddToCart(parseInt(product.id), quantities[product.id] || 1)}>
                                         <FaCartShopping className="w-6 h-6" />
                                     </button>

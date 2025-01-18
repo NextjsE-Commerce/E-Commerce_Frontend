@@ -2,11 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import { FaCartShopping, FaBars } from "react-icons/fa6";
+import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { FaTimes } from "react-icons/fa";
 import axios from "axios";
+import { RootState } from "@/redux/store";
+import { getItemInCart } from "@/redux/userSlice";
 
 interface HeaderProps {
   page: string;
@@ -17,12 +20,36 @@ export default function Header({ page }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const { cartItem } = useSelector(
+    (state: RootState) => state.users
+  );
 
   useEffect(() => {
     // Check if the token exists in cookies
     const token = Cookies.get("access_token");
     setIsLoggedIn(!!token);
+
+    if (token) {
+      fetchCartItemCount();
+    }
+
   }, []);
+
+  const fetchCartItemCount = async () => {
+    const token = Cookies.get("access_token")
+    try {
+      const response = await axios.get("http://localhost:8000/api/itemincart", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch(getItemInCart(response.data.items_in_cart));
+    } catch (error) {
+      console.error("Error fetching cart item count:", error);
+    }
+  };
 
   const handleLogout = async () => {
     const token = Cookies.get("access_token")
@@ -113,7 +140,7 @@ export default function Header({ page }: HeaderProps) {
               <div className="relative flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300">
                 <FaCartShopping className="text-gray-700 text-lg" />
                 <div className="absolute -top-2 -right-2 bg-blue-400 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
-                  2
+                  {cartItem.item_incart}
                 </div>
               </div>
               {/* Logout Button */}
@@ -167,7 +194,7 @@ export default function Header({ page }: HeaderProps) {
                   <div className="relative flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300">
                     <FaCartShopping className="text-gray-700 text-lg" />
                     <div className="absolute -top-2 -right-2 bg-blue-400 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
-                      2
+                      {cartItem.item_incart}
                     </div>
                   </div>
                   <button onClick={handleLogout} className="flex border font-semibold bg-blue-400 text-white w-24 px-3 py-2 rounded-md hover:border-blue-400 hover:bg-white hover:text-blue-400 transition duration-300 justify-center">
@@ -177,8 +204,8 @@ export default function Header({ page }: HeaderProps) {
               </>
             ) : (
               <Link href={"/login"} className="flex border font-semibold bg-blue-400 text-white w-24 px-3 py-2 rounded-md hover:border-blue-400 hover:bg-white hover:text-blue-400 transition duration-300 justify-center">
-              <p>Login</p>
-            </Link>
+                <p>Login</p>
+              </Link>
             )}
 
           </div>
