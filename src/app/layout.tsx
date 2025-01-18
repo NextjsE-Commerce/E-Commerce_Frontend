@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import "./globals.css";
 import store from "@/redux/store";
 import ClientProvider from '@/components/ClientProvider';
+import { ToastContainer } from 'react-toastify';
 
 export const metadata: Metadata = {
   title: {
@@ -19,7 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="overflow-x-hidden">
-      <ClientProvider>{children}</ClientProvider>
+        <ClientProvider>
+          <ToastContainer position="top-right" autoClose={5001} />
+          {children}
+        </ClientProvider>
       </body>
     </html>
   );

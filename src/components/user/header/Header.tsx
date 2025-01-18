@@ -32,12 +32,10 @@ export default function Header({ page }: HeaderProps) {
 
     try {
 
-
       const response = await axios.post("http://localhost:8000/api/logout", {}, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
-        // credentials: "include",
       });
 
       if (response.status === 200) {
@@ -130,8 +128,7 @@ export default function Header({ page }: HeaderProps) {
             /* Login Button */
             <Link
               href="/login"
-              className="flex border font-semibold bg-blue-400 text-white w-24 px-3 py-2 rounded-md hover:border-blue-400 hover:bg-white hover:text-blue-400 transition duration-300 justify-center"
-            >
+              className={`flex border font-semibold bg-blue-400 text-white w-24 px-3 py-2 rounded-md hover:border-blue-400 ${isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white'} hover:text-blue-400 transition duration-300 justify-center`}>
               Login
             </Link>
           )}

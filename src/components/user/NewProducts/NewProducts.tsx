@@ -3,7 +3,12 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { FaStar, FaStarHalf } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { getProduct } from "@/redux/userSlice";
 import { RootState } from "@/redux/store";
 
@@ -11,12 +16,19 @@ const NewProducts = () => {
 
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
+    const [isLogged, setIsLogged] = useState(false);
+    const [quantities, setQuantities] = useState<{ [key: string]: number }>({});
+    const router = useRouter()
     const productsPerPage = 9;
 
     const dispatch = useDispatch();
 
     const products = useSelector((state: RootState) => state.users.products);
 
+    useEffect(() => {
+        const accessToken = Cookies.get("access_token");
+        setIsLogged(!!accessToken);
+    }, []);
 
     useEffect(() => {
         fetchNewProducts();
@@ -57,15 +69,70 @@ const NewProducts = () => {
         setCurrentPage(pageNumber);
     };
 
+    const handleAddToCart = async (productId: number, quantity: number) => {
+        if (!isLogged) {
+            toast.error("You must first login", {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                style: { backgroundColor: "red", color: "#fff" },
+            });
+
+            setTimeout(() => {
+                router.push("/login");
+            }, 2500);
+
+            return;
+        }
+
+        try {
+            const token = Cookies.get("access_token");
+            const response = await axios.post(
+                "http://localhost:8000/api/add_to_cart",
+                { product_id: productId, quantity },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    // withCredentials: true,
+                }
+            );
+
+            if (response.status === 200) {
+                toast.success("Added to cart successfully!", {
+                    position: "top-right",
+                    autoClose: 4000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    style: { backgroundColor: "green", color: "#fff" },
+                });
+            }
+
+        } catch (error) {
+            console.error("Error adding to cart:", error);
+            toast.error("Failed Please try again", {
+                position: "top-right",
+                autoClose: 4000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                style: { backgroundColor: "red", color: "#fff" },
+            });
+        }
+    };
+
     const colors = ["bg-blue-50", "bg-purple-50", "bg-green-50"];
-
-
 
     return (
 
         <div className="bg-gray-100 md:py-12 md:px-0">
-
-
             {loading ? (
                 <div className="mt-52 flex justify-center items-center h-64">
                     <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
@@ -98,15 +165,43 @@ const NewProducts = () => {
                                 </div>
                                 <h1 className="text-2xl font-semibold my-5">{product.product_name}</h1>
                                 <h2 className="font-semibold mb-5">{product.price} Birr</h2>
-                                <div className="space-x-10 flex justify-center">
+                                {/* <div className="space-x-10 flex justify-center">
                                     <button
                                         className={`bg-blue-500 text-white justify-center p-2 px-6 rounded-md font-semibold hover:scale-105 transform transition-all duration-300 ease-in-out`}
-                                        style={{ display: "inline-block", transformOrigin: "center" }}
-                                    >
+                                        style={{ display: "inline-block", transformOrigin: "center" }}>
                                         <div className="flex space-x-1 items-center">
                                             <span>Add To</span>
                                             <FaCartShopping className="text-white text-lg" />
                                         </div>
+                                    </button>
+                                </div> */}
+                                <div className="flex justify-center">
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        value={quantities[product.id] || 1}
+                                        // defaultValue="1"
+                                        className="border w-20 px-3 py-2 text-center"
+                                        onChange={(e) =>
+                                            setQuantities({
+                                                ...quantities,
+                                                [product.id]: parseInt(e.target.value, 10) || 1,
+                                            })
+                                        }
+                                        id={`quantity_${product.id}`}
+                                    />
+                                    <button
+                                        className="bg-blue-500 text-white p-2 px-3 py-2 rounded-r-sm  flex items-center space-x-1 hover:scale-105 transform transition"
+                                        // onClick={() =>
+                                        //     handleAddToCart(
+                                        //         parseInt(product.id),
+                                        //         parseInt(
+                                        //             (document.getElementById(`quantity_${product.id}`) as HTMLInputElement).value
+                                        //         )
+                                        //     )
+                                        // }
+                                        onClick={() => handleAddToCart(parseInt(product.id), quantities[product.id] || 1)}>
+                                        <FaCartShopping className="w-6 h-6" />
                                     </button>
                                 </div>
                             </div>
