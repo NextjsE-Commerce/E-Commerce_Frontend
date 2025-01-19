@@ -1,5 +1,7 @@
 # first clone the application then 
 
+# npm install
+
 # Run npm run dev
 
 
