@@ -113,7 +113,7 @@ export default function Header({ page }: HeaderProps) {
     >
       <nav className="container xl:mx-auto sm:mx-9 p-4 flex justify-between items-center">
         <div className="xl:text-2xl text-xl font-bold text-blue-400 pr-1">
-          <Link href="/">E-Gebeya</Link>
+          <Link href="/">Electro-Gebeya</Link>
         </div>
 
         <div className="hidden md:flex lg:space-x-12 space-x-4">
@@ -136,14 +136,20 @@ export default function Header({ page }: HeaderProps) {
         <div className="hidden md:flex space-x-4">
           {isLoggedIn ? (
             <>
-              {/* Cart Icon */}
+
               <div className="relative flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300">
-                <FaCartShopping className="text-gray-700 text-lg" />
-                <div className="absolute -top-2 -right-2 bg-blue-400 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
-                  {cartItem.item_incart}
-                </div>
+                <Link
+                  href="/cart"
+                  className={`hover:text-blue-400 xl:text-lg text-md font-semibold ${page === "Cart" ? "text-blue-400 font-bold" : "text-gray-600"
+                    }`}>
+                  <FaCartShopping className=" mt-1text-xl" />
+                  <div className="absolute -top-2 -right-2 bg-blue-400 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                    {cartItem.item_incart}
+                  </div>
+                </Link>
+
               </div>
-              {/* Logout Button */}
+
               <button
                 onClick={handleLogout}
                 className="flex border font-semibold bg-blue-400 text-white w-24 px-3 py-2 rounded-md hover:border-blue-400 hover:bg-white hover:text-blue-400 transition duration-300 justify-center"
@@ -192,10 +198,15 @@ export default function Header({ page }: HeaderProps) {
 
                 <div className="md:flex">
                   <div className="relative flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300">
-                    <FaCartShopping className="text-gray-700 text-lg" />
-                    <div className="absolute -top-2 -right-2 bg-blue-400 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
-                      {cartItem.item_incart}
-                    </div>
+                    <Link
+                      href="/cart"
+                      className={`hover:text-blue-400 xl:text-lg text-md font-semibold ${page === "Cart" ? "text-blue-400 font-bold" : "text-gray-600"
+                        }`}>
+                      <FaCartShopping className="text-gray-700 text-lg" />
+                      <div className="absolute -top-2 -right-2 bg-blue-400 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                        {cartItem.item_incart}
+                      </div>
+                    </Link>
                   </div>
                   <button onClick={handleLogout} className="flex border font-semibold bg-blue-400 text-white w-24 px-3 py-2 rounded-md hover:border-blue-400 hover:bg-white hover:text-blue-400 transition duration-300 justify-center">
                     Log Out

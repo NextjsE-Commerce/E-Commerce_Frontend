@@ -9,8 +9,13 @@ interface User {
     profileImage: string;
 }
 
-interface CartItem {
-    item_incart: number; 
+interface UserCart {
+    id: string;
+    product_name: string;
+    product_status: string;
+    quantity: string;
+    price: string;
+    image: string;
 }
 
 interface Products {
@@ -36,6 +41,15 @@ const initialState: {
         price: string;
         quantity: string;
         product_image: string;
+    }[];
+
+    usercart: {
+        id: string;
+        product_name: string;
+        product_status: string;
+        quantity: string;
+        price: string;
+        image: string;
     }[];
 
     cartItem: { item_incart: number },
@@ -66,9 +80,10 @@ const initialState: {
 } = {
     users: [],
     products: [],
+    usercart: [],
     cartItem: {
         item_incart: 0
-    },   
+    },
     formDataRegister: {
         firstName: "",
         lastName: "",
@@ -107,7 +122,7 @@ const userSlice = createSlice({
                 profileImage: user.profileImage,
             }));
         },
-        
+
         getProduct: (state, action: { payload: Products[] }) => {
             state.products = action.payload.map((products: Products) => ({
                 id: products.id,
@@ -120,7 +135,18 @@ const userSlice = createSlice({
                 product_image: products.product_image,
             }));
         },
-        
+
+        getUserCart: (state, action: { payload: UserCart[] }) => {
+            state.usercart = action.payload.map((cart: UserCart) => ({
+                id: cart.id,
+                product_name: cart.product_name,
+                product_status: cart.product_status,
+                quantity: cart.quantity,
+                price: cart.price,
+                image: cart.image
+            }));
+        },
+
         // getItemInCart: (state, action: { payload: CartItem[] }) => {
         //     state.cartItem = action.payload.map((cartItem: CartItem) => ({
         //          item_incart: cartItem.item_incart
@@ -128,9 +154,9 @@ const userSlice = createSlice({
         //   },
 
         getItemInCart: (state, action: { payload: number }) => {
-            state.cartItem.item_incart = action.payload; 
+            state.cartItem.item_incart = action.payload;
         },
-            
+
 
         deleteUser: (state, action: { payload: { id: string } }) => {
             const id = action.payload.id;
@@ -163,11 +189,11 @@ const userSlice = createSlice({
 
         cleanFormData: (state) => {
             state.formDataRegister.firstName = "",
-            state.formDataRegister.lastName = "",
-            state.formDataRegister.sex = "";
+                state.formDataRegister.lastName = "",
+                state.formDataRegister.sex = "";
             state.formDataRegister.email = ""
             state.formDataRegister.password = "",
-            state.formDataRegister.phone = ""
+                state.formDataRegister.phone = ""
             state.formDataRegister.password_confirmation = ""
         },
 
@@ -181,5 +207,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { getUser, getProduct, getItemInCart, updateFormDataRegister, updateFormDataLogin, updateGoogleFormData, updateImage, clearErrors, cleanFormData, setErrorsRegister, setErrorsLogin, deleteUser } = userSlice.actions;
+export const { getUser, getProduct, getItemInCart, getUserCart, updateFormDataRegister, updateFormDataLogin, updateGoogleFormData, updateImage, clearErrors, cleanFormData, setErrorsRegister, setErrorsLogin, deleteUser } = userSlice.actions;
 export default userSlice.reducer;

@@ -36,7 +36,6 @@ const NewProducts = () => {
         fetchNewProducts();
     }, []);
 
-
     const fetchNewProducts = async () => {
         try {
             setLoading(true);
@@ -141,7 +140,7 @@ const NewProducts = () => {
 
     return (
 
-        <div className="bg-gray-100 md:py-12 md:px-0">
+        <div className="bg-gray-100 py-12 md:px-0">
             {loading ? (
                 <div className="mt-52 flex justify-center items-center h-64">
                     <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
