@@ -71,7 +71,7 @@ export default function Header({ page }: HeaderProps) {
         Cookies.remove("role");
         setIsLoggedIn(false);
 
-        router.push("/login");
+        router.push("/");
       } else {
         console.error("Logout failed");
       }
@@ -152,8 +152,7 @@ export default function Header({ page }: HeaderProps) {
 
               <button
                 onClick={handleLogout}
-                className="flex border font-semibold bg-blue-400 text-white w-24 px-3 py-2 rounded-md hover:border-blue-400 hover:bg-white hover:text-blue-400 transition duration-300 justify-center"
-              >
+                 className={`flex border font-semibold bg-blue-400 text-white w-24 px-3 py-2 rounded-md hover:border-blue-400 ${isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white'} hover:text-blue-400 transition duration-300 justify-center`}>
                 Log Out
               </button>
             </>
@@ -208,7 +207,8 @@ export default function Header({ page }: HeaderProps) {
                       </div>
                     </Link>
                   </div>
-                  <button onClick={handleLogout} className="flex border font-semibold bg-blue-400 text-white w-24 px-3 py-2 rounded-md hover:border-blue-400 hover:bg-white hover:text-blue-400 transition duration-300 justify-center">
+                  <button onClick={handleLogout} 
+                   className={`flex border font-semibold bg-blue-400 text-white w-24 px-3 py-2 rounded-md hover:border-blue-400 ${isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white'} hover:text-blue-400 transition duration-300 justify-center`}>
                     Log Out
                   </button>
                 </div>

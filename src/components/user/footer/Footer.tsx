@@ -75,8 +75,8 @@ export default function Footer() {
                             <FiMail className="text-blue-500" />
                             <a href="mailto:natman093@gmail.com" className="text-gray-600 hover:text-blue-500 hover:font-semibold transform transition-all duration-300 ease-in-out">natman093@gmail.com</a>
                         </div>
-                        <p className='mt-4 text-gray-600  transform transition-all duration-300 ease-in-out'>Subscribe to our news letter</p>
-                        <div className="mt-2 flex">
+                        {/* <p className='mt-4 text-gray-600  transform transition-all duration-300 ease-in-out'>Subscribe to our news letter</p> */}
+                        {/* <div className="mt-2 flex">
                             <input
                                 type="email"
                                 placeholder="Enter your email"
@@ -85,7 +85,7 @@ export default function Footer() {
                             <button className="p-2 bg-blue-400 text-white rounded-r-md hover:bg-blue-500 transition-all duration-300 ease-in-out">
                                 Subscribe
                             </button>
-                        </div>
+                        </div> */}
                     </div>
 
 
