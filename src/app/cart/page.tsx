@@ -258,7 +258,7 @@ export default function Cart() {
                           onClick={() => handleUpdate(cart.id)}
                           disabled={isUpdated !== cart.id}
                           className={`ml-2 p-2 rounded-md ${
-                            isUpdated === cart.id ? "hover:bg-green-400  bg-green-600 shadow-sm  text-white" : "bg-gray-300 cursor-not-allowed shadow-md"
+                            isUpdated === cart.id ? "hover:bg-green-500  bg-green-600 shadow-sm  text-white" : "bg-gray-300 cursor-not-allowed shadow-md"
                           }`}
                         >
                           <FaEdit  />
