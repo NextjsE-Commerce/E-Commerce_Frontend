@@ -29,6 +29,17 @@ interface Products {
     product_image: string;
 }
 
+interface ProductDetail {
+    id: string;
+    product_name: string;
+    category: string;
+    product_status: string;
+    description: string;
+    price: string;
+    quantity: string;
+    product_image: string;
+}
+
 const initialState: {
     users: { id: string; firstName: string; lastName: string; email: string; phone: string; profileImage: string }[];
 
@@ -42,6 +53,17 @@ const initialState: {
         quantity: string;
         product_image: string;
     }[];
+
+    productdetail: {
+        id: string;
+        product_name: string;
+        category: string;
+        product_status: string;
+        description: string;
+        price: string;
+        quantity: string;
+        product_image: string;
+    };
 
     usercart: {
         id: string;
@@ -83,6 +105,16 @@ const initialState: {
     usercart: [],
     cartItem: {
         item_incart: 0
+    },
+    productdetail: {
+        id: "",
+        product_name: "",
+        category: "",
+        product_status: "",
+        description: "",
+        price: "",
+        quantity: "",
+        product_image: "",
     },
     formDataRegister: {
         firstName: "",
@@ -147,11 +179,20 @@ const userSlice = createSlice({
             }));
         },
 
-        // getItemInCart: (state, action: { payload: CartItem[] }) => {
-        //     state.cartItem = action.payload.map((cartItem: CartItem) => ({
-        //          item_incart: cartItem.item_incart
-        //       }))
-        //   },
+        getProductDetail: (state, action: { payload: ProductDetail }) => {
+            state.productdetail = {
+                id: action.payload.id,
+                product_name: action.payload.product_name,
+                category: action.payload.category,
+                product_status: action.payload.product_status,
+                description: action.payload.description,
+                price: action.payload.price,
+                quantity: action.payload.quantity,
+                product_image: action.payload.product_image,
+            };
+        },
+
+
 
         getItemInCart: (state, action: { payload: number }) => {
             state.cartItem.item_incart = action.payload;
@@ -207,5 +248,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { getUser, getProduct, getItemInCart, getUserCart, updateFormDataRegister, updateFormDataLogin, updateGoogleFormData, updateImage, clearErrors, cleanFormData, setErrorsRegister, setErrorsLogin, deleteUser } = userSlice.actions;
+export const { getUser, getProduct, getItemInCart, getUserCart, getProductDetail, updateFormDataRegister, updateFormDataLogin, updateGoogleFormData, updateImage, clearErrors, cleanFormData, setErrorsRegister, setErrorsLogin, deleteUser } = userSlice.actions;
 export default userSlice.reducer;

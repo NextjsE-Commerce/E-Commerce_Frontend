@@ -28,10 +28,10 @@ export default function Footer() {
                         <h4 className="font-bold text-blue-400 mb-5">Information</h4>
                         <ul>
                             <li className="pb-2">
-                                <Link href='#' className="text-gray-600 hover:text-blue-500 hover:font-semibold  transform transition-all duration-300 ease-in-out">Home</Link>
+                                <Link href='/' className="text-gray-600 hover:text-blue-500 hover:font-semibold  transform transition-all duration-300 ease-in-out">Home</Link>
                             </li>
                             <li className="pb-2">
-                                <Link href='#' className="text-gray-600 hover:text-blue-500 hover:font-semibold  transform transition-all duration-300 ease-in-out">Products</Link>
+                                <Link href='/products' className="text-gray-600 hover:text-blue-500 hover:font-semibold  transform transition-all duration-300 ease-in-out">Products</Link>
                             </li>
                             <li className="pb-2">
                                 <a href="#" className="text-gray-600 hover:text-blue-500 hover:font-semibold  transform transition-all duration-300 ease-in-out">Blog</a>

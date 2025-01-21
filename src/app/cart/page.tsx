@@ -78,7 +78,7 @@ export default function Cart() {
         return {
           ...item,
           quantity: newQuantity.toString(),
-          price: updatedPrice.toFixed(2),
+          price: updatedPrice.toFixed(0),
         };
       }
       return item;
@@ -217,7 +217,7 @@ export default function Cart() {
             <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : (
-          <div className="flex flex-col md:flex-row md:space-x-6 max-w-7xl mx-auto">
+          <div className="flex flex-col lg:flex-row lg:space-x-6 max-w-7xl mx-auto">
             {/* Cart Items Section */}
             <div className="flex-grow">
               {usercart.map((cart) => (
@@ -281,7 +281,7 @@ export default function Cart() {
             </div>
 
             {/* Order Summary Section */}
-            <div className="rounded-lg border bg-white p-6 shadow-md  md:w-1/4 flex-grow">
+            <div className="h-72 rounded-lg border bg-white p-6 shadow-md  lg:w-1/4 flex-grow">
               <h2 className="text-lg font-bold text-gray-900">Order Summary</h2>
               <div className="mt-4 flex justify-between">
                 <p className="text-gray-700">Subtotal</p>

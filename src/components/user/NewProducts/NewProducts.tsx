@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { FaStar, FaStarHalf } from "react-icons/fa";
-import { FaCartShopping } from "react-icons/fa6";
+import { FaCartShopping, FaEye } from "react-icons/fa6";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -11,6 +11,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getItemInCart, getProduct } from "@/redux/userSlice";
 import { RootState } from "@/redux/store";
+import Link from "next/link";
 
 const NewProducts = () => {
 
@@ -88,10 +89,6 @@ const NewProducts = () => {
 
             return;
         }
-
-        console.log(productId)
-
-        console.log(quantity)
 
         try {
             const token = Cookies.get("access_token");
@@ -177,14 +174,14 @@ const NewProducts = () => {
                                 <div className="flex justify-center">
                                     <input
                                         type="number"
-                                        min="0"
+                                        min="1"
                                         value={quantities[product.id] || 1}
                                         // defaultValue="1"
                                         className="border w-20 px-3 py-2 text-center"
                                         onChange={(e) =>
                                             setQuantities({
                                                 ...quantities,
-                                                [product.id]: parseInt(e.target.value, 10) || 1,
+                                                [product.id]: parseInt(e.target.value, 10),
                                             })
                                         }
                                     />
@@ -193,6 +190,10 @@ const NewProducts = () => {
                                         onClick={() => handleAddToCart(parseInt(product.id), quantities[product.id] || 1)}>
                                         <FaCartShopping className="w-6 h-6" />
                                     </button>
+                                    <Link
+                                     href={`/productdetail/${product.id}`} className="ml-3 bg-green-500 text-white p-2 px-3 py-2 rounded-sm  flex items-center space-x-1 hover:scale-105 transform transition">
+                                        <FaEye/>
+                                    </Link>
                                 </div>
                             </div>
                         ))}
