@@ -61,15 +61,13 @@ export default function Login() {
             // console.log(role)
 
             
+            if(response.data.status === 200){
+                Cookies.set("access_token", token, { secure: true, sameSite: "strict", expires: 1 });
+                Cookies.set("role", role, { secure: true, sameSite: "strict", expires: 1 });
 
-            Cookies.set("access_token", token, { secure: true, sameSite: "strict", expires: 1 });
-             
-            Cookies.set("role",role)
-            
-
-            if (response.data.status === 200) {
                 handleAuthorizedRequest(token);
             }
+           
             else {
                 console.error(response.data.Login_error)
                 dispatch(setErrorsLogin({ general: response.data.Login_error }));
