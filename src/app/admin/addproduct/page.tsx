@@ -3,11 +3,13 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "@/redux/store";
-import { updateFormDataAddProduct, clearErrors, cleanFormData,  updateImage, setErrorsAddproduct } from '@/redux/adminSlice';
+import { updateFormDataAddProduct, clearErrors, cleanFormData, updateImage, setErrorsAddproduct } from '@/redux/adminSlice';
 import axios from 'axios';
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import AdminHeader from '@/components/admin/Header/AdminHeader';
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddProduct = () => {
 
@@ -27,12 +29,12 @@ const AddProduct = () => {
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-      ) => {
+    ) => {
         dispatch(clearErrors());
         const { name, value } = e.target;
         dispatch(updateFormDataAddProduct({ field: name as keyof typeof formDataAddProduct, value }));
-      };
-      
+    };
+
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -99,7 +101,22 @@ const AddProduct = () => {
             );
             // console.log(response.data.message);
             setAddProstate(false)
-            router.push("/admin/dashboard")
+
+
+            toast.success("Product added successfully!", {
+                position: "top-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                style: { backgroundColor: "green", color: "#fff" },
+            });
+
+            setTimeout(() => {
+                router.push("/admin/dashboard")
+            }, 1800);
+
 
         } catch (error) {
             setAddProstate(false)
@@ -204,7 +221,7 @@ const AddProduct = () => {
                                     value={formDataAddProduct.description} // Correct value assigned here
                                     placeholder="Enter Product Description"
                                     className={`shadow appearance-none border rounded w-full row-span-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errorAddProduct.description ? 'border-red-500' : 'border-gray-300'}`}>
-                                    
+
                                 </textarea>
 
                                 {errorAddProduct.description && <div className="text-red-600">{errorAddProduct.description}</div>}

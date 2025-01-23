@@ -98,10 +98,38 @@ export default function Dashboard() {
                     },
                 })
                 // dispatch(deleteProduct(id))
-                fetchProduct();
+
+                toast.success("Product delated successfully!", {
+                    position: "top-right",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    style: { backgroundColor: "green", color: "#fff" },
+                });
+
                 setShowModal(false);
+
+                setTimeout(() => {
+                    fetchProduct();
+                }, 1800);
+
+
+
             } catch (error) {
                 console.error("Failed to delete product:", error);
+
+                toast.error("Product delated successfully!", {
+                    position: "top-right",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    style: { backgroundColor: "red", color: "#fff" },
+                });
+
                 setShowModal(false);
                 setDeleteItem(null);
             } finally {
@@ -148,8 +176,20 @@ export default function Dashboard() {
                                 <tbody>
                                     {productset.map((product, index) => (
                                         <tr key={product.id} className={`${index % 2 === 0 ? "bg-white" : "bg-gray-200"}`}>
-                                            <td className="py-4 px-6 border-b border-gray-200">{product.product_name}</td>
-                                            <td className="py-4 px-6 border-b border-gray-200">{product.description}</td>
+                                            <td className="py-4 px-6 border-b border-gray-200">{product.product_name}<span className={`text-sm ${product.product_status === "New" ? 'text-green-800' : 'text-red-700'}`}> ({product.product_status})</span></td>
+                                            <td className="py-4 px-6 border-b border-gray-200">
+                                                {product.description
+                                                    .split(" ") // Split the description into words
+                                                    .reduce<string[][]>((acc, word, i) => {
+                                                        // Explicitly type the accumulator as an array of string arrays
+                                                        if (i % 3 === 0) acc.push([]); // Create a new line every 6 words
+                                                        acc[acc.length - 1].push(word); // Add word to the current line
+                                                        return acc;
+                                                    }, [])
+                                                    .map((line, i) => (
+                                                        <p key={i}>{line.join(" ")}</p> // Join the words in each line and render as a paragraph
+                                                    ))}
+                                            </td>
                                             <td className="py-4 px-6 border-b border-gray-200">{product.category}</td>
                                             <td className="py-4 px-6 border-b border-gray-200">{product.price}</td>
                                             <td className="py-4 px-6 border-b border-gray-200">{product.quantity}</td>
