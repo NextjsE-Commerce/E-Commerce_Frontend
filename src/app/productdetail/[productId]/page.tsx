@@ -24,7 +24,7 @@ export default function ProductDetail({
     const [quantity, setQuantity] = useState(1);
     const [productId, setProductId] = useState<string | null>(null);
     const [isLogged, setIsLogged] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [productNotFound, setProductNotFound] = useState(false);
     const router = useRouter()
 

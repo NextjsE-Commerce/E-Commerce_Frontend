@@ -5,7 +5,7 @@ import Footer from "@/components/admin/Footer/Footer";
 import AdminHeader from "@/components/admin/Header/AdminHeader";
 import { FaTrashAlt, FaEdit, FaTimes } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { getProduct, deleteProduct } from "@/redux/adminSlice";
+import { getProduct, deleteProduct, getProductCategory } from "@/redux/adminSlice";
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { RootState } from "@/redux/store";
@@ -15,6 +15,8 @@ import Cookies from "js-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { div } from "framer-motion/client";
+import Link from "next/link";
+import { FaEye } from "react-icons/fa6";
 
 type Product = {
     id: number;
@@ -35,6 +37,7 @@ export default function Dashboard() {
     const router = useRouter()
     const dispatch = useDispatch()
     const productset = useSelector((state: RootState) => state.admin.products);
+    const productcategory = useSelector((state: RootState) => state.admin.category);
     const [loading, setLoading] = useState(true);
 
 
@@ -46,7 +49,7 @@ export default function Dashboard() {
         try {
             setLoading(true);
             const token = Cookies.get("access_token")
-            const response = await axios.post('http://localhost:8000/api/products',{}, {
+            const response = await axios.post('http://localhost:8000/api/products', {}, {
                 headers: {
                     "Content-Type": "application/json",
                     'Authorization': `Bearer ${token}`,
@@ -55,13 +58,17 @@ export default function Dashboard() {
             });
 
             const productdata = response.data.products;
+            const category = response.data.category;
+
             setLoading(false);
 
             dispatch(getProduct(productdata));
+            // dispatch(getProductCategory(category));
+
         } catch (error) {
             setLoading(false);
             console.error("Error fetching products:", error);
-            router.push("/login");
+            // router.push("/login");
         }
         finally {
             setLoading(false);
@@ -131,6 +138,7 @@ export default function Dashboard() {
                                     <tr className="bg-gray-200">
                                         <th className="py-4 px-6 text-left text-gray-600 font-bold uppercase">Product</th>
                                         <th className="py-4 px-6 text-left text-gray-600 font-bold uppercase">Description</th>
+                                        <th className="py-4 px-6 text-left text-gray-600 font-bold uppercase">Category</th>
                                         <th className="py-4 px-6 text-left text-gray-600 font-bold uppercase">Price (ETB)</th>
                                         <th className="py-4 px-6 text-left text-gray-600 font-bold uppercase">Quantity</th>
                                         <th className="py-4 px-6 text-left text-gray-600 font-bold uppercase">Image</th>
@@ -142,6 +150,7 @@ export default function Dashboard() {
                                         <tr key={product.id} className={`${index % 2 === 0 ? "bg-white" : "bg-gray-200"}`}>
                                             <td className="py-4 px-6 border-b border-gray-200">{product.product_name}</td>
                                             <td className="py-4 px-6 border-b border-gray-200">{product.description}</td>
+                                            <td className="py-4 px-6 border-b border-gray-200">{product.category}</td>
                                             <td className="py-4 px-6 border-b border-gray-200">{product.price}</td>
                                             <td className="py-4 px-6 border-b border-gray-200">{product.quantity}</td>
                                             <td className="py-4 px-6 border-b border-gray-200">
@@ -157,18 +166,23 @@ export default function Dashboard() {
                                                 <div className="flex space-x-2">
                                                     <button
                                                         onClick={() => handleDeleteClick(product)}
-                                                        className="bg-red-500 text-white p-2 rounded hover:bg-red-600"
+                                                        className="bg-red-500 text-white p-2 rounded hover:bg-red-600 hover:scale-105 transform transition"
                                                     >
                                                         <FaTrashAlt />
                                                     </button>
-                                                    <button className="bg-green-500 text-white p-2 rounded hover:bg-green-600">
+                                                    {/* <button className="bg-green-500 text-white p-2 rounded hover:bg-green-600">
                                                         <FaEdit />
-                                                    </button>
+                                                    </button> */}
+                                                    <Link
+                                                        href={`/admin/updateproduct/${product.id}`} className="bg-green-500 hover:bg-green-600 text-white p-2  py-2 rounded  hover:scale-105 transform transition">
+                                                        <FaEdit />
+                                                    </Link>
                                                 </div>
                                             </td>
                                         </tr>
                                     ))}
                                 </tbody>
+
                             </table>
                         </div>
                     </div>

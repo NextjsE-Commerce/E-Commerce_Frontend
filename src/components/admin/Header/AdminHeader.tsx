@@ -83,7 +83,7 @@ export default function AdminHeader({ page }: HeaderProps) {
         <header className={`fixed top-0 w-full z-50 transition-all mb-24 duration-300 ${isScrolled ? 'bg-gray-100 shadow-lg' : 'bg-white'} `}>
             <nav className="container xl:mx-auto sm:mx-9 p-4 flex justify-between items-center">
                 <div className="xl:text-2xl text-xl font-bold text-blue-400 pr-1">
-                    <Link href="/admin/dashboard">E-Gebeya</Link>
+                    <Link href="/admin/dashboard">Electro-Gebeya</Link>
                 </div>
 
                 <div className="hidden md:flex lg:space-x-12 space-x-4">
@@ -104,7 +104,7 @@ export default function AdminHeader({ page }: HeaderProps) {
 
                     <button
                         onClick={handleLogout}
-                        className="flex border font-semibold bg-blue-400 text-white w-24 px-3 py-2 rounded-md hover:border-blue-400 hover:bg-white hover:text-blue-400 transition duration-300 justify-center"
+                        className={`flex border font-semibold bg-blue-400 text-white w-24 px-3 py-2 rounded-md hover:border-blue-400 ${isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white'}  hover:text-blue-400 transition duration-300 justify-center`}
                     >
                         Log Out
                     </button>

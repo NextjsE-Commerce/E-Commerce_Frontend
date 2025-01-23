@@ -104,7 +104,7 @@ const initialState: {
     products: [],
     usercart: [],
     cartItem: {
-        item_incart: 0
+        item_incart: 0 
     },
     productdetail: {
         id: "",

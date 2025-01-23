@@ -213,7 +213,7 @@ export default function Cart() {
       <div className="bg-gray-100 mb-32 pt-10 px-4 md:px-10 flex-grow">
         <h1 className="mb-14 mt-24 text-center text-5xl font-bold">Cart Items</h1>
         {loading ? (
-          <div className="mt-52 flex justify-center items-center h-64">
+          <div className="mt-36 flex justify-center items-center h-64">
             <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : (
