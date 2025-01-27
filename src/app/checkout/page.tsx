@@ -136,8 +136,8 @@ export default function CheckOut() {
     );
 
     const shipping = 6.0;
-    const tax = subtotal * 0.001;
-    const total = subtotal + shipping + tax;
+    const vat = subtotal * 0.001;
+    const total = subtotal + shipping + vat;
 
     return (
         <div className="bg-gray-100">
@@ -338,8 +338,8 @@ export default function CheckOut() {
                                         <span>{shipping.toFixed(2)} ETB</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span>Tax</span>
-                                        <span>{tax.toFixed(2)} ETB</span>
+                                        <span>Vat</span>
+                                        <span>{vat.toFixed(2)} ETB</span>
                                     </div>
                                     <div className="flex justify-between font-bold text-lg">
                                         <span>Total</span>

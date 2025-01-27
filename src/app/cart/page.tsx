@@ -207,8 +207,8 @@ export default function Cart() {
   );
 
   const shipping = 6.0;
-  const tax = subtotal * 0.001;
-  const total = subtotal + shipping + tax;
+  const vat = subtotal * 0.001;
+  const total = subtotal + shipping + vat;
 
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
@@ -294,8 +294,8 @@ export default function Cart() {
                 <p className="text-gray-700">ETB {shipping.toFixed(2)}</p>
               </div>
               <div className="mt-2 flex justify-between">
-                <p className="text-gray-700">Tax</p>
-                <p className="text-gray-700">{tax.toFixed(2)} ETB</p>
+                <p className="text-gray-700">Vat</p>
+                <p className="text-gray-700">{vat.toFixed(2)} ETB</p>
               </div>
               <hr className="my-4" />
               <div className="flex justify-between mb-8">
