@@ -1,10 +1,10 @@
 import Header from "@/components/user/header/Header"
 import Footer from "@/components/user/footer/Footer";
-export default function Order() {
+export default function Orders() {
     return (
-        <div>
-            <Header page="Order" />
-              <h1>Welcome to Orders Page!</h1>
+        <div>  
+            <Header page="Orders" />
+              <h1>Welcome to Check Out Page!</h1>
             <Footer />
         </div>
     )

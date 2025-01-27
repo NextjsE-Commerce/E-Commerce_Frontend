@@ -15,6 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { getItemInCart, getUserCart } from "@/redux/userSlice";
 import { RootState } from "@/redux/store";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 type UserCart = {
   id: string;
@@ -54,8 +55,8 @@ export default function Cart() {
         }
       );
 
-      const usercart = response.data.usercart;
-      dispatch(getUserCart(usercart));
+      const usercart2 = response.data.usercart;
+      dispatch(getUserCart(usercart2));
       setLoading(false);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -204,8 +205,10 @@ export default function Cart() {
     (total, item) => total + (parseInt(item.price) / parseInt(item.quantity)) * parseInt(item.quantity),
     0
   );
-  const shipping = 4.99;
-  const total = subtotal + shipping;
+
+  const shipping = 6.0;
+  const tax = subtotal * 0.001;
+  const total = subtotal + shipping + tax;
 
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
@@ -257,11 +260,10 @@ export default function Cart() {
                         <button
                           onClick={() => handleUpdate(cart.id)}
                           disabled={isUpdated !== cart.id}
-                          className={`ml-2 p-2 rounded-md ${
-                            isUpdated === cart.id ? "hover:bg-green-500  bg-green-600 shadow-sm  text-white" : "bg-gray-300 cursor-not-allowed shadow-md"
-                          }`}
+                          className={`ml-2 p-2 rounded-md ${isUpdated === cart.id ? "hover:bg-green-500  bg-green-600 shadow-sm  text-white" : "bg-gray-300 cursor-not-allowed shadow-md"
+                            }`}
                         >
-                          <FaEdit  />
+                          <FaEdit />
                         </button>
                       </div>
                       <div className="flex items-center space-x-4 mt-2 sm:mt-0">
@@ -291,14 +293,18 @@ export default function Cart() {
                 <p className="text-gray-700">Shipping</p>
                 <p className="text-gray-700">ETB {shipping.toFixed(2)}</p>
               </div>
+              <div className="mt-2 flex justify-between">
+                <p className="text-gray-700">Tax</p>
+                <p className="text-gray-700">{tax.toFixed(2)} ETB</p>
+              </div>
               <hr className="my-4" />
-              <div className="flex justify-between">
+              <div className="flex justify-between mb-8">
                 <p className="text-lg font-bold">Total</p>
                 <p className="text-lg font-bold">ETB {total.toFixed(2)}</p>
               </div>
-              <button className="mt-6 w-full rounded-md bg-blue-500 py-2 text-white font-medium hover:bg-blue-600">
+              <Link href={"/checkout"} className="px-9 py-3 w-full rounded-md bg-blue-500 flex justify-center shadow-sm text-white font-medium hover:bg-blue-600">
                 Proceed to Checkout
-              </button>
+              </Link>
             </div>
           </div>
         )}
