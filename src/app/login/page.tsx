@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "@/redux/store";
-import { updateFormDataLogin, updateGoogleFormData, updateImage, clearErrors, setErrorsLogin } from "@/redux/userSlice";
+import { updateFormDataLogin, updateGoogleFormData, updateImage, clearErrors, setErrorsLogin, setIsLoggedIn } from "@/redux/userSlice";
 import axios from 'axios';
 import { GoogleLogin } from "react-google-login";
 import { signIn } from "next-auth/react";
@@ -23,7 +23,7 @@ export default function Login() {
     const dispatch = useDispatch();
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const { formDataLogin, formDataGoogle, errorsLogin } = useSelector(
+    const { formDataLogin, formDataGoogle, errorsLogin, isLoggedIn } = useSelector(
         (state: RootState) => state.users
     );
 
@@ -110,6 +110,8 @@ export default function Login() {
             });
 
             const role = response.data.role
+
+            dispatch(setIsLoggedIn(true))
 
             if (role === "admin") {
                 router.push("/admin/dashboard");

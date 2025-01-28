@@ -9,27 +9,28 @@ import Cookies from "js-cookie";
 import { FaTimes } from "react-icons/fa";
 import axios from "axios";
 import { RootState } from "@/redux/store";
-import { getItemInCart } from "@/redux/userSlice";
+import { getItemInCart, setIsLoggedIn  } from "@/redux/userSlice";
 
 interface HeaderProps {
   page: string;
 }
 
 export default function Header({ page }: HeaderProps) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { cartItem } = useSelector(
+  const { isLoggedIn, cartItem } = useSelector(
     (state: RootState) => state.users
   );
 
   useEffect(() => {
     // Check if the token exists in cookies
     const token = Cookies.get("access_token");
-    setIsLoggedIn(!!token);
+    // setIsLoggedIn(!!token);
+    dispatch(setIsLoggedIn(!!token));
 
     if (token) {
       fetchCartItemCount();
@@ -46,8 +47,17 @@ export default function Header({ page }: HeaderProps) {
         },
       });
       dispatch(getItemInCart(response.data.items_in_cart));
-    } catch (error) {
+      dispatch(setIsLoggedIn(true));
+    } catch (error: any) {
       console.error("Error fetching cart item count:", error);
+      if(error.status === 401){
+        Cookies.remove("access_token", { secure: true, sameSite: "strict" });
+        Cookies.remove("role");
+        // setIsLoggedIn(false);
+        dispatch(setIsLoggedIn(false));
+
+        router.push("/")
+      }
     }
   };
 
@@ -69,7 +79,8 @@ export default function Header({ page }: HeaderProps) {
         // console.log(Cookies.get("access_token"))
         Cookies.remove("access_token", { secure: true, sameSite: "strict" });
         Cookies.remove("role");
-        setIsLoggedIn(false);
+        // setIsLoggedIn(false);
+        dispatch(setIsLoggedIn(false));
 
         router.push("/");
       } else {

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Interface } from "readline";
 
 interface User {
     _id: string;
@@ -40,6 +41,10 @@ interface ProductDetail {
     product_image: string;
 }
 
+interface Category {
+    category_name: string;
+}
+
 const initialState: {
     users: { id: string; firstName: string; lastName: string; email: string; phone: string; profileImage: string }[];
 
@@ -53,6 +58,7 @@ const initialState: {
         quantity: string;
         product_image: string;
     }[];
+
 
     productdetail: {
         id: string;
@@ -75,6 +81,11 @@ const initialState: {
     }[];
 
     cartItem: { item_incart: number },
+    isLoggedIn: boolean,
+
+    category: {
+        category_name: string,
+    }[];
 
     formDataRegister: {
         firstName: string;
@@ -103,8 +114,10 @@ const initialState: {
     users: [],
     products: [],
     usercart: [],
+    category: [],
+    isLoggedIn: false,
     cartItem: {
-        item_incart: 0 
+        item_incart: 0
     },
     productdetail: {
         id: "",
@@ -155,6 +168,10 @@ const userSlice = createSlice({
             }));
         },
 
+        setIsLoggedIn: (state, action) => {
+            state.isLoggedIn = action.payload;
+        },
+
         getProduct: (state, action: { payload: Products[] }) => {
             state.products = action.payload.map((products: Products) => ({
                 id: products.id,
@@ -193,11 +210,16 @@ const userSlice = createSlice({
         },
 
 
-
         getItemInCart: (state, action: { payload: number }) => {
             state.cartItem.item_incart = action.payload;
         },
 
+        getCategories: (state, action: { payload: Category[] }) => {
+            state.category = action.payload.map((category: Category) => ({
+                category_name: category.category_name
+            }));
+        },
+        
 
         deleteUser: (state, action: { payload: { id: string } }) => {
             const id = action.payload.id;
@@ -248,5 +270,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { getUser, getProduct, getItemInCart, getUserCart, getProductDetail, updateFormDataRegister, updateFormDataLogin, updateGoogleFormData, updateImage, clearErrors, cleanFormData, setErrorsRegister, setErrorsLogin, deleteUser } = userSlice.actions;
+export const { getUser, getProduct, getItemInCart, setIsLoggedIn, getCategories, getUserCart, getProductDetail, updateFormDataRegister, updateFormDataLogin, updateGoogleFormData, updateImage, clearErrors, cleanFormData, setErrorsRegister, setErrorsLogin, deleteUser } = userSlice.actions;
 export default userSlice.reducer;

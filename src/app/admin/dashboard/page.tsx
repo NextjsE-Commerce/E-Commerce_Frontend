@@ -17,6 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { div } from "framer-motion/client";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa6";
+import { setIsLoggedIn } from "@/redux/userSlice";
 
 type Product = {
     id: number;
@@ -38,6 +39,9 @@ export default function Dashboard() {
     const dispatch = useDispatch()
     const productset = useSelector((state: RootState) => state.admin.products);
     const productcategory = useSelector((state: RootState) => state.admin.category);
+    const { isLoggedIn } = useSelector(
+        (state: RootState) => state.users
+    );
     const [loading, setLoading] = useState(true);
 
 
@@ -65,13 +69,29 @@ export default function Dashboard() {
             dispatch(getProduct(productdata));
             // dispatch(getProductCategory(category));
 
-        } catch (error) {
-            setLoading(false);
+        } catch (error: any) {
+            // setLoading(true);
             console.error("Error fetching products:", error);
+            if (error.status === 401) {
+                Cookies.remove("access_token", { secure: true, sameSite: "strict" });
+                Cookies.remove("role");
+                // setIsLoggedIn(false);
+                setLoading(true);
+                dispatch(setIsLoggedIn(false));
+                router.push("/login")
+            }
+            else {
+                router.push("/")
+            }
             // router.push("/login");
         }
         finally {
-            setLoading(false);
+            // if (isLoggedIn === true) {
+            //     setLoading(false);
+            // }
+            // else {
+            //     setLoading(true);
+            // }
         }
     };
 

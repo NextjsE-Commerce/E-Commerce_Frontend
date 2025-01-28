@@ -158,7 +158,7 @@ export default function CheckOut() {
 
                         <div className="w-full flex flex-col lg:flex-row gap-8">
                             {/* Left: Form Section */}
-                            <div className={`flex-1  ${paymentMethod === "Card Payment" ? "h-[710px]" : "h-[530px]"  }  bg-white p-8 rounded-lg shadow`}>
+                            <div className={`flex-1  ${paymentMethod === "Card Payment" ? "h-[710px]" : "h-[530px]"}  bg-white p-8 rounded-lg shadow`}>
                                 <form className="space-y-6">
                                     {/* Contact Info */}
                                     <div>
@@ -187,14 +187,14 @@ export default function CheckOut() {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <input
                                                 type="text"
-                                                name="first_name"
+                                                name="firstName"
                                                 placeholder="First name"
                                                 className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
                                                 required
                                             />
                                             <input
                                                 type="text"
-                                                placeholder="Last name"
+                                                placeholder="lastName"
                                                 name="last_name"
                                                 className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
                                                 required
@@ -214,6 +214,13 @@ export default function CheckOut() {
                                             />
                                             <input
                                                 type="text"
+                                                placeholder="Country"
+                                                name="country"
+                                                className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
+                                                required
+                                            />
+                                            <input
+                                                type="text"
                                                 placeholder="City"
                                                 name="city"
                                                 className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
@@ -221,21 +228,18 @@ export default function CheckOut() {
                                             />
                                             <input
                                                 type="text"
+                                                name="state_province"
+                                                placeholder="State/Province"
+                                                className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
+                                            />
+                                            <input
+                                                type="text"
                                                 placeholder="Postal code"
                                                 name="postal_code"
                                                 className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
                                             />
-                                            <input
-                                                type="text"
-                                                placeholder="Country"
-                                                className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
-                                                required
-                                            />
-                                            <input
-                                                type="text"
-                                                placeholder="State/Province"
-                                                className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
-                                            />
+
+
                                         </div>
                                     </div>
 
@@ -247,7 +251,7 @@ export default function CheckOut() {
                                             <label className="flex items-center gap-2">
                                                 <input
                                                     type="radio"
-                                                    name="payment"
+                                                    name="payment_method"
                                                     value="Card Payment"
                                                     checked={paymentMethod === "Card Payment"}
                                                     onChange={(e) => setPaymentMethod(e.target.value)}
@@ -257,7 +261,7 @@ export default function CheckOut() {
                                             <label className="flex items-center gap-2">
                                                 <input
                                                     type="radio"
-                                                    name="payment"
+                                                    name="payment_method"
                                                     value="Cash on Delivery"
                                                     checked={paymentMethod === "Cash on Delivery"}
                                                     onChange={(e) => setPaymentMethod(e.target.value)}
@@ -388,7 +392,6 @@ export default function CheckOut() {
                         </div>
                     )}
                 </div>
-
             </div>
             <Footer />
         </div>

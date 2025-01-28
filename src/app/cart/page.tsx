@@ -12,7 +12,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getItemInCart, getUserCart } from "@/redux/userSlice";
+import { getItemInCart, getUserCart, setIsLoggedIn } from "@/redux/userSlice";
 import { RootState } from "@/redux/store";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -36,12 +36,28 @@ export default function Cart() {
   const [showModal, setShowModal] = useState(false);
   const usercart = useSelector((state: RootState) => state.users.usercart);
 
-  useEffect(() => {
-    fetchUserCart();
-  }, []);
+  const { isLoggedIn, cartItem } = useSelector(
+    (state: RootState) => state.users
+  );
+
+    useEffect(() => {
+      const token = Cookies.get("access_token");
+      if (token) {
+        dispatch(setIsLoggedIn(true)); 
+      }
+      fetchUserCart(); 
+    }, []);
+    
 
   const fetchUserCart = async () => {
+
     const token = Cookies.get("access_token");
+
+    if (!token) {
+      setLoading(false); 
+      return;
+    }
+
     try {
       setLoading(true);
       const response = await axios.post(
@@ -58,11 +74,27 @@ export default function Cart() {
       const usercart2 = response.data.usercart;
       dispatch(getUserCart(usercart2));
       setLoading(false);
-    } catch (error) {
+
+    } catch (error: any) {
       console.error("Error fetching products:", error);
-      setLoading(false);
+      if(error.status === 401){
+        Cookies.remove("access_token", { secure: true, sameSite: "strict" });
+        Cookies.remove("role");
+        // setIsLoggedIn(false);
+        setLoading(true);
+        dispatch(setIsLoggedIn(false));
+
+        router.push("/login")
+      }
+      else{
+        router.push("/")
+      }
+      // setLoading(false);
     } finally {
-      setLoading(false);
+     
+    //     setLoading(false);
+      
+
     }
   };
 
@@ -206,7 +238,10 @@ export default function Cart() {
     0
   );
 
-  const shipping = 6.0;
+
+
+  const shipping = cartItem.item_incart * 6.0;
+  
   const vat = subtotal * 0.001;
   const total = subtotal + shipping + vat;
 
@@ -286,13 +321,13 @@ export default function Cart() {
             <div className="h-72 rounded-lg border bg-white p-6 shadow-md  lg:w-1/4 flex-grow">
               <h2 className="text-lg font-bold text-gray-900">Order Summary</h2>
               <div className="mt-4 flex justify-between">
-                <p className="text-gray-700">Subtotal</p>
+                <p className="text-gray-700">Subtotal(Before Shipping)</p>
                 <p className="text-gray-700">ETB {subtotal.toFixed(2)}</p>
               </div>
-              <div className="mt-2 flex justify-between">
+              {/* <div className="mt-2 flex justify-between">
                 <p className="text-gray-700">Shipping</p>
                 <p className="text-gray-700">ETB {shipping.toFixed(2)}</p>
-              </div>
+              </div> */}
               <div className="mt-2 flex justify-between">
                 <p className="text-gray-700">Vat</p>
                 <p className="text-gray-700">{vat.toFixed(2)} ETB</p>
