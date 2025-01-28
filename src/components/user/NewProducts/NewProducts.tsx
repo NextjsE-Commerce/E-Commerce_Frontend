@@ -119,17 +119,33 @@ const NewProducts = () => {
                 });
             }
 
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error adding to cart:", error);
-            toast.error("Failed Please try again", {
-                position: "top-right",
-                autoClose: 4000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                style: { backgroundColor: "red", color: "#fff" },
-            });
+
+            if (error.status === 401) {
+                toast.error("Pleace login first!", {
+                    position: "top-right",
+                    autoClose: 4000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    style: { backgroundColor: "red", color: "#fff" },
+                });
+                router.push("/login")
+            }
+            else {
+                toast.error("Failed Please try again", {
+                    position: "top-right",
+                    autoClose: 4000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    style: { backgroundColor: "red", color: "#fff" },
+                });
+            }
+
         }
     };
 
@@ -191,8 +207,8 @@ const NewProducts = () => {
                                         <FaCartShopping className="w-6 h-6" />
                                     </button>
                                     <Link
-                                     href={`/productdetail/${product.id}`} className="ml-3 bg-green-500 text-white p-2 px-3 py-2 rounded-sm  flex items-center space-x-1 hover:scale-105 transform transition">
-                                        <FaEye/>
+                                        href={`/productdetail/${product.id}`} className="ml-3 bg-green-500 text-white p-2 px-3 py-2 rounded-sm  flex items-center space-x-1 hover:scale-105 transform transition">
+                                        <FaEye />
                                     </Link>
                                 </div>
                             </div>

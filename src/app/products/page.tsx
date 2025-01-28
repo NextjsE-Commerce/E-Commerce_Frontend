@@ -16,7 +16,7 @@ import { getItemInCart, getProduct, getCategories } from "@/redux/userSlice";
 import { RootState } from "@/redux/store";
 import Link from "next/link";
 
-export default function Products () {
+export default function Products() {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -35,7 +35,7 @@ export default function Products () {
 
   useEffect(() => {
     setCurrentPage(1);
-}, [searchTerm, selectedCategory]); 
+  }, [searchTerm, selectedCategory]);
 
 
   useEffect(() => {
@@ -85,13 +85,21 @@ export default function Products () {
   // Handle category filter
   const handleCategoryFilter = (category: string | null) => {
     setSelectedCategory(category);
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   // Handle add to cart
   const handleAddToCart = async (productId: string, quantity: number) => {
     if (!Cookies.get("access_token")) {
-      toast.error("You must first login", { autoClose: 2000 });
+      toast.error("Pleace login first!", {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        style: { backgroundColor: "red", color: "#fff" },
+      });
       setTimeout(() => router.push("/login"), 2500);
       return;
     }
@@ -223,7 +231,7 @@ export default function Products () {
             )}
           </div>)}
 
-        
+
         </div>
 
       </div>

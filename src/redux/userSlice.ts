@@ -41,6 +41,12 @@ interface ProductDetail {
     product_image: string;
 }
 
+interface Shipping {
+    id: string;
+    location: string;
+    price: string;
+}
+
 interface Category {
     category_name: string;
 }
@@ -87,6 +93,12 @@ const initialState: {
         category_name: string,
     }[];
 
+    shipping: {
+        id: string;
+        location: string;
+        price: string;
+    }[];
+
     formDataRegister: {
         firstName: string;
         lastName: string;
@@ -115,6 +127,7 @@ const initialState: {
     products: [],
     usercart: [],
     category: [],
+    shipping: [],
     isLoggedIn: false,
     cartItem: {
         item_incart: 0
@@ -209,6 +222,13 @@ const userSlice = createSlice({
             };
         },
 
+        getShipping: (state, action: { payload: Shipping[] }) => {
+            state.shipping = action.payload.map((shipping: Shipping) => ({
+                id: shipping.id,
+                location: shipping.location,
+                price: shipping.price
+            }));
+        },
 
         getItemInCart: (state, action: { payload: number }) => {
             state.cartItem.item_incart = action.payload;
@@ -219,7 +239,9 @@ const userSlice = createSlice({
                 category_name: category.category_name
             }));
         },
-        
+
+
+
 
         deleteUser: (state, action: { payload: { id: string } }) => {
             const id = action.payload.id;
@@ -270,5 +292,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { getUser, getProduct, getItemInCart, setIsLoggedIn, getCategories, getUserCart, getProductDetail, updateFormDataRegister, updateFormDataLogin, updateGoogleFormData, updateImage, clearErrors, cleanFormData, setErrorsRegister, setErrorsLogin, deleteUser } = userSlice.actions;
+export const { getUser, getProduct, getItemInCart, setIsLoggedIn, getShipping, getCategories, getUserCart, getProductDetail, updateFormDataRegister, updateFormDataLogin, updateGoogleFormData, updateImage, clearErrors, cleanFormData, setErrorsRegister, setErrorsLogin, deleteUser } = userSlice.actions;
 export default userSlice.reducer;

@@ -12,7 +12,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getItemInCart, getUserCart } from "@/redux/userSlice";
+import { getItemInCart, getShipping, getUserCart } from "@/redux/userSlice";
 import { RootState } from "@/redux/store";
 import { useSession } from "next-auth/react";
 
@@ -57,7 +57,11 @@ export default function CheckOut() {
             );
 
             const usercart2 = response.data.usercart;
+
             dispatch(getUserCart(usercart2));
+
+            dispatch(getShipping(response.data.shipping))
+            
             setLoading(false);
         } catch (error) {
             console.error("Error fetching products:", error);
@@ -155,12 +159,11 @@ export default function CheckOut() {
                             <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
                         </div>
                     ) : (
-
                         <div className="w-full flex flex-col lg:flex-row gap-8">
-                            {/* Left: Form Section */}
+
                             <div className={`flex-1  ${paymentMethod === "Card Payment" ? "h-[710px]" : "h-[530px]"}  bg-white p-8 rounded-lg shadow`}>
                                 <form className="space-y-6">
-                                    {/* Contact Info */}
+
                                     <div>
                                         <h2 className="text-lg font-bold mb-4">Contact Information</h2>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -181,7 +184,6 @@ export default function CheckOut() {
                                         </div>
                                     </div>
 
-                                    {/* Shipping Info */}
                                     <div>
                                         <h2 className="text-lg font-bold mb-4">Shipping Information</h2>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -238,12 +240,9 @@ export default function CheckOut() {
                                                 name="postal_code"
                                                 className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
                                             />
-
-
                                         </div>
                                     </div>
 
-                                    {/* Delivery Method */}
                                     <div>
                                         <h2 className="text-lg font-bold mb-4">Delivery Method</h2>
                                         <div className="flex items-center gap-4">
